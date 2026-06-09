@@ -13,7 +13,7 @@ import {
   Lightning,
   PixelGhost,
 } from "@/components/RetroIcons";
-import { Users, Smartphone, Gamepad2, Sparkles, Zap, Trophy, Heart, ArrowRight, Dices, BookOpen, ClipboardList } from "lucide-react";
+import { Users, Smartphone, Gamepad2, Sparkles, Zap, Trophy, Heart, ArrowRight, Dices, BookOpen, ClipboardList, Flame, MessageCircle } from "lucide-react";
 
 // === HEAVY FLOATING DECORATIONS ===
 const FloatingDecor = () => (
@@ -127,31 +127,16 @@ const Hero = () => {
           <span className="font-arcade text-xs md:text-sm">SELF-DISCLOSURE BOARDGAME · EST. 2026</span>
         </div>
 
-        <h1 className="retro-title text-[clamp(3rem,14vw,11rem)] font-display mb-4">
-          ECHOMIND
-        </h1>
         <div className="relative inline-block">
-          <div className="retro-card-lime inline-block px-8 py-2 rotate-[-2deg] relative">
-            <h2 className="retro-title-lime text-[clamp(1.5rem,5vw,3.5rem)] font-display">
-              BIMBINGAN &amp; KONSELING
-            </h2>
-            <div className="absolute -top-8 -right-8 w-20 h-20 md:w-28 md:h-28 wobble">
-              <div className="starburst w-full h-full flex items-center justify-center">
-                <span className="text-xs md:text-sm font-display rotate-[12deg]">NEW!</span>
-              </div>
+          <h1 className="retro-title text-[clamp(3rem,14vw,11rem)] font-display mb-4">
+            ECHOMIND
+          </h1>
+          <div className="absolute -top-2 -right-10 md:-right-16 w-20 h-20 md:w-28 md:h-28 wobble">
+            <div className="starburst w-full h-full flex items-center justify-center">
+              <span className="text-xs md:text-sm font-display rotate-[12deg]">NEW!</span>
             </div>
           </div>
         </div>
-
-        <p className="mt-8 max-w-3xl mx-auto font-body text-base md:text-lg font-medium text-[#3B0764]">
-          Echomind adalah media bimbingan dan konseling berbasis <strong>permainan papan (board game)</strong> yang
-          membantu peserta didik mengembangkan <span className="bg-[#FF1493] text-white px-2 py-1 rounded-md font-bold">keterbukaan diri (self-disclosure)</span>{" "}
-          dalam suasana yang <strong>aman, menyenangkan,</strong> dan <strong>suportif</strong>.
-        </p>
-        <p className="mt-4 max-w-3xl mx-auto font-body text-sm md:text-base text-[#3B0764]/85">
-          Melalui kombinasi <strong>ular tangga</strong>, <strong>kartu skenario</strong>, dan <strong>kartu challenge</strong>,
-          peserta didik diajak mengenali, mengungkapkan, serta merefleksikan pengalaman, pikiran, perasaan, dan pandangan mereka.
-        </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <button
@@ -309,10 +294,10 @@ const HowToPlay = () => {
 // === CARD TYPES SECTION (replaces "Unlock Boosters") ===
 const CardTypes = () => {
   const items = [
-    { icon: "🔥", color: "#FF1493", title: "CHALLENGE", desc: "Tantangan singkat — peragakan, ungkapkan, atau bertindak di depan kelompok." },
-    { icon: "💬", color: "#5B21B6", title: "SCENARIO", desc: "Pertanyaan reflektif — bagikan pengalaman dan pandangan secara jujur." },
-    { icon: "⚡", color: "#06B6D4", title: "TWIST", desc: "Plot twist! Mundur langkah, lewati giliran, atau efek mengejutkan lainnya." },
-    { icon: "💖", color: "#84CC16", title: "BOOST", desc: "Power-up positif — tameng, lompat maju, lempar dadu ulang, dan lainnya." },
+    { Icon: Flame, color: "#FF1493", title: "CHALLENGE", desc: "Tantangan singkat — peragakan, ungkapkan, atau bertindak di depan kelompok." },
+    { Icon: MessageCircle, color: "#5B21B6", title: "SKENARIO", desc: "Pertanyaan reflektif — bagikan pengalaman dan pandangan secara jujur." },
+    { Icon: Zap, color: "#06B6D4", title: "TWIST", desc: "Plot twist! Mundur langkah, lewati giliran, atau efek mengejutkan lainnya." },
+    { Icon: Heart, color: "#84CC16", title: "BOOST", desc: "Power-up positif — tameng, lompat maju, lempar dadu ulang, dan lainnya." },
   ];
   return (
     <section data-testid="features-section" className="relative z-10 px-4 md:px-10 py-12">
@@ -337,10 +322,10 @@ const CardTypes = () => {
                 className="bg-white rounded-3xl p-5 border-4 border-black shadow-[6px_6px_0_#0A0A0A] hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0_#FFD600] transition-all"
               >
                 <div
-                  className="w-12 h-12 rounded-2xl border-4 border-black flex items-center justify-center mb-3 text-2xl"
+                  className="w-12 h-12 rounded-2xl border-4 border-black flex items-center justify-center mb-3"
                   style={{ backgroundColor: f.color }}
                 >
-                  {f.icon}
+                  <f.Icon className="w-6 h-6 text-white" strokeWidth={3} />
                 </div>
                 <h4 className="font-display text-xl mb-1">{f.title}</h4>
                 <p className="font-body text-sm font-medium text-black/70">{f.desc}</p>

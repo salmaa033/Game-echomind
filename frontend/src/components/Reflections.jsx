@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Trash2, Trophy, ChevronDown, ChevronUp, ClipboardList, BookOpen } from "lucide-react";
+import { ArrowLeft, Trash2, Trophy, ChevronDown, ChevronUp, ClipboardList, BookOpen, Flame, MessageCircle, Zap, Heart } from "lucide-react";
 import { ASPECTS, CARD_TYPES } from "@/constants/cards";
+
+const ICONS = { flame: Flame, "message-circle": MessageCircle, zap: Zap, heart: Heart };
+const TypeIcon = ({ iconKey, ...rest }) => { const I = ICONS[iconKey] || Flame; return <I {...rest} />; };
 
 const REFLECTION_PROMPTS = [
   "Bagian permainan mana yang paling membuatmu nyaman membuka diri?",
@@ -153,7 +156,9 @@ const Reflections = () => {
                                 <div key={idx} className="border-2 border-black rounded-lg p-3" style={{ borderLeft: `8px solid ${aspect?.color || "#000"}` }}>
                                   <div className="flex items-center gap-2 flex-wrap">
                                     <span className="font-pixel text-[10px] bg-black text-yellow-300 px-2 py-1 rounded">#{c.cell}</span>
-                                    <span className="font-pixel text-[10px]" style={{ color: type?.color }}>{type?.icon} {type?.label}</span>
+                                    <span className="font-pixel text-[10px] flex items-center gap-1" style={{ color: type?.color }}>
+                                      <TypeIcon iconKey={type?.iconKey} className="w-3 h-3" strokeWidth={3} /> {type?.label}
+                                    </span>
                                     <span className="font-pixel text-[10px] text-[#5B21B6]">{aspect?.icon} {aspect?.name}</span>
                                     <span className="font-pixel text-[10px] bg-[#FFD600] px-2 py-1 rounded border border-black">{c.player}</span>
                                     <span className="font-pixel text-[10px] bg-white px-2 py-1 rounded border border-black">{c.action}</span>

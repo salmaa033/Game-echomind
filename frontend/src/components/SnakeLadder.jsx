@@ -1,8 +1,42 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Dices, Trophy, Plus, Trash2, Play, RotateCcw, Sparkles, ClipboardList, X } from "lucide-react";
+import { ArrowLeft, Dices, Trophy, Plus, Trash2, Play, RotateCcw, Sparkles, ClipboardList, X, Flame, MessageCircle, Zap, Heart } from "lucide-react";
 import { ASPECTS, CARDS, CARD_TYPES, TWIST_EFFECTS, BOOST_EFFECTS } from "@/constants/cards";
 import { Star, Sparkle, PixelHeart, Lightning, Diamond } from "@/components/RetroIcons";
+
+const ICON_FOR = {
+  flame: Flame,
+  "message-circle": MessageCircle,
+  zap: Zap,
+  heart: Heart,
+};
+const TypeIcon = ({ iconKey, ...rest }) => {
+  const I = ICON_FOR[iconKey] || Flame;
+  return <I {...rest} />;
+};
+
+// Dice pip layout (1-6) — array of [row,col] in 3x3 grid
+const PIP_LAYOUT = {
+  1: [[1,1]],
+  2: [[0,0],[2,2]],
+  3: [[0,0],[1,1],[2,2]],
+  4: [[0,0],[0,2],[2,0],[2,2]],
+  5: [[0,0],[0,2],[1,1],[2,0],[2,2]],
+  6: [[0,0],[0,2],[1,0],[1,2],[2,0],[2,2]],
+};
+const DiceFace = ({ value }) => {
+  if (!value) return <span className="font-display text-4xl text-[#5B21B6]">?</span>;
+  const pips = PIP_LAYOUT[value] || [];
+  return (
+    <div className="grid grid-cols-3 grid-rows-3 gap-1 w-14 h-14 md:w-16 md:h-16 p-2">
+      {Array.from({ length: 9 }).map((_, i) => {
+        const r = Math.floor(i / 3), col = i % 3;
+        const on = pips.some(([pr, pc]) => pr === r && pc === col);
+        return <div key={i} className={`rounded-full ${on ? "bg-black" : "bg-transparent"}`} />;
+      })}
+    </div>
+  );
+};
 
 /**
  * 60-cell serpentine board: 6 rows × 10 cols.
@@ -78,7 +112,7 @@ const Board = ({ positions, validPlayers, lastRoll }) => {
                 title={`#${n} · ${aspect.name} · ${type.label}`}
               >
                 <div className="absolute top-0 left-0 text-[8px] md:text-[10px] font-pixel bg-black text-yellow-300 px-1">{n}</div>
-                <div className="text-base md:text-lg">{type.icon}</div>
+                <TypeIcon iconKey={type.iconKey} className="w-4 h-4 md:w-5 md:h-5" style={{ color: type.color }} strokeWidth={3} />
                 {isSnake && <div className="absolute bottom-0 right-0 text-[8px] md:text-[10px]">🐍</div>}
                 {isLadder && <div className="absolute bottom-0 right-0 text-[8px] md:text-[10px]">🪜</div>}
                 {playersHere.length > 0 && (
@@ -86,8 +120,8 @@ const Board = ({ positions, validPlayers, lastRoll }) => {
                     {playersHere.map(({ p, idx }) => (
                       <div
                         key={idx}
-                        className="w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-black"
-                        style={{ backgroundColor: p.color, boxShadow: idx === (lastRoll?.turn ?? -1) ? "0 0 0 2px #FFD600" : "none" }}
+                        className="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 border-black shadow-[1px_1px_0_#0A0A0A] transition-all duration-300"
+                        style={{ backgroundColor: p.color, boxShadow: idx === (lastRoll?.turn ?? -1) ? "0 0 0 2px #FFD600, 1px 1px 0 #0A0A0A" : "1px 1px 0 #0A0A0A" }}
                         title={p.name}
                       />
                     ))}
@@ -102,7 +136,9 @@ const Board = ({ positions, validPlayers, lastRoll }) => {
         <span>🐍 = Ular</span>
         <span>🪜 = Tangga</span>
         {Object.entries(CARD_TYPES).map(([k, t]) => (
-          <span key={k}>{t.icon} {t.label}</span>
+          <span key={k} className="flex items-center gap-1">
+            <TypeIcon iconKey={t.iconKey} className="w-3 h-3" style={{ color: t.color }} strokeWidth={3} /> {t.label}
+          </span>
         ))}
       </div>
     </div>
@@ -114,11 +150,10 @@ const Dice = ({ dice, rolling, onRoll, disabled }) => (
     data-testid="dice-roll-btn"
     onClick={onRoll}
     disabled={disabled || rolling}
-    className={`retro-card !p-0 !rounded-2xl w-24 h-24 md:w-28 md:h-28 flex items-center justify-center font-display text-5xl md:text-6xl text-[#5B21B6] ${rolling ? "animate-spin" : ""} ${disabled ? "opacity-50 cursor-not-allowed" : "hover:translate-x-[-2px] hover:translate-y-[-2px]"}`}
-    style={{ textShadow: "3px 3px 0 #FF1493" }}
+    className={`!p-0 !rounded-2xl w-24 h-24 md:w-28 md:h-28 bg-white border-4 border-black flex items-center justify-center shadow-[6px_6px_0_#0A0A0A] ${rolling ? "animate-spin" : ""} ${disabled ? "opacity-50 cursor-not-allowed" : "hover:translate-x-[-2px] hover:translate-y-[-2px]"}`}
     aria-label="Lempar dadu"
   >
-    {dice ?? "?"}
+    <DiceFace value={dice} />
   </button>
 );
 
@@ -550,13 +585,20 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
               <div className="text-3xl">{ASPECTS.find(a => a.id === activeCard.aspect)?.icon}</div>
               <div>
                 <div className="font-pixel text-[10px] text-[#5B21B6]">KOTAK #{activeCard.cellNumber} · {ASPECTS.find(a => a.id === activeCard.aspect)?.name.toUpperCase()}</div>
-                <div className="font-display text-xl" style={{ color: CARD_TYPES[activeCard.type].color }}>
-                  {CARD_TYPES[activeCard.type].icon} {CARD_TYPES[activeCard.type].label}
+                <div className="font-display text-xl flex items-center gap-2" style={{ color: CARD_TYPES[activeCard.type].color }}>
+                  <TypeIcon iconKey={CARD_TYPES[activeCard.type].iconKey} className="w-5 h-5" strokeWidth={3} />
+                  {CARD_TYPES[activeCard.type].label}
                 </div>
               </div>
             </div>
             <h3 className="font-display text-2xl md:text-3xl mb-3" style={{ textShadow: "3px 3px 0 #FFD600" }}>{activeCard.title}</h3>
-            <p className="font-body text-base md:text-lg mb-6 text-[#0A0A0A]">{activeCard.prompt}</p>
+            <p className="font-body text-base md:text-lg mb-3 text-[#0A0A0A]">{activeCard.prompt}</p>
+            {activeCard.refleksi && (
+              <div className="mb-6 p-3 rounded-lg border-2 border-black bg-[#FFD600]/40">
+                <div className="font-pixel text-[10px] text-[#5B21B6] mb-1">// REFLEKSI //</div>
+                <p className="font-body text-sm font-medium">{activeCard.refleksi}</p>
+              </div>
+            )}
             <div className="flex flex-wrap gap-3">
               <button data-testid="card-answer-btn" onClick={onCardAnswered} className="retro-btn retro-btn-lime !text-sm">
                 <Sparkles className="w-4 h-4" strokeWidth={3} />

@@ -58,3 +58,22 @@ File baru `/app/frontend/src/components/Reflections.jsx` + route `/reflections`:
 - Realtime multiplayer (websocket) — saat ini room code visual saja, board jalan satu device
 - Export laporan refleksi BK ke PDF
 - Tambah autentikasi guru BK (login + dashboard kelas)
+
+## Update — Revisi 2 (2026-01-09)
+Berdasarkan dokumen `REVISI LAGI ECHOMIND DIGITAL.docx`:
+- ✅ Hapus subtitle "BIMBINGAN & KONSELING" di hero
+- ✅ Hapus 2 paragraf deskripsi "Echomind adalah media..." di hero
+- ✅ Ganti seluruh emoji smartphone (🔥💬⚡💖) di card type indicators dengan **ikon lucide-react bertema** (Flame, MessageCircle, Zap, Heart) — diaplikasikan di:
+  - Board cells (60 kotak)
+  - Legend board
+  - Modal kartu
+  - Halaman Refleksi (riwayat kartu)
+  - Landing "Tipe Kartu Permainan" section
+- ✅ Dadu sekarang **dadu fisik dengan pip dot** (1-6 titik) via DiceFace component — bukan angka
+- ✅ Pion pemain lebih distinct: border hitam 2px + shadow + highlight kuning untuk pemain aktif (transition 300ms saat bergerak)
+- ✅ Title kartu Challenge ditambahkan **emoji prefix** dari dokumen (🎭 ROLEPLAY!, ⚡ FIRST INSTINCT!, 🎤 PODIUM!, 🎵 KARAOKE PAKSA!, 🕵️ TEBAK AKU!, 🛍️ STYLIST DADAKAN!, 🎬 PITCHING!, 📸 TIME CAPSULE!, 🎯 IMPIAN KILAT!, 💸 CRAZY SPENDING!, 🦈 SHARK TANK!, 🧾 AUDIT KEUANGAN!, 💌 SURAT JUJUR!, 🪞 CERMIN JUJUR!, 🎯 TEBAK EMOSIKU!, 🤸 BODY CHALLENGE!, 🪞 SELF-LOVE OUT LOUD!, 🎭 POSE HARI INI!)
+- ✅ Twist/Boost titles ditambahkan format dari dokumen: "⚡ TWIST — TUKAR POSISI!" dll, "💖 BOOST — LOMPAT MAJU 5!" dll
+- ✅ Field **refleksi** ditambahkan ke kartu yang punya pertanyaan refleksi tambahan (ROLEPLAY!, KARAOKE PAKSA!, PITCHING!) — ditampilkan di modal dengan highlight kuning
+- ✅ Page title HTML & teks card content sesuai dokumen baru
+
+Note: untuk papan ilustrasi vector art retro (top-down view dengan banyak detail dekorasi dalam kotak) butuh asset desain custom — di iterasi ini board tetap functional grid 6×10 dengan ikon lucide bertema. Bisa di-upgrade dengan asset SVG custom di iterasi berikutnya.
