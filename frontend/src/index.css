@@ -2,83 +2,374 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+:root {
+    --retro-yellow: #FFD600;
+    --retro-yellow-bright: #FFE600;
+    --retro-purple: #5B21B6;
+    --retro-purple-deep: #3B0764;
+    --retro-magenta: #EC4899;
+    --retro-magenta-hot: #FF1493;
+    --retro-lime: #84CC16;
+    --retro-lime-bright: #BEF264;
+    --retro-black: #0A0A0A;
+    --retro-cream: #FFF8DC;
+    --retro-cyan: #06B6D4;
+    --retro-orange: #FB923C;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
+    padding: 0;
+    background-color: var(--retro-yellow);
+    font-family: "Space Grotesk", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: var(--retro-black);
+    overflow-x: hidden;
+}
+
+/* GRID BACKGROUND PATTERN */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(10, 10, 10, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 10, 10, 0.08) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: "Press Start 2P", monospace;
 }
 
+.font-display {
+    font-family: "Bowlby One", "Bungee", cursive;
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+}
+
+.font-pixel {
+    font-family: "Press Start 2P", monospace;
+}
+
+.font-arcade {
+    font-family: "Bungee", "Bowlby One", cursive;
+    letter-spacing: 0.04em;
+}
+
+.font-body {
+    font-family: "Space Grotesk", sans-serif;
+}
+
+/* RETRO TEXT EFFECTS */
+.retro-title {
+    font-family: "Bowlby One", cursive;
+    color: var(--retro-purple);
+    -webkit-text-stroke: 3px var(--retro-black);
+    text-shadow:
+        6px 6px 0 var(--retro-black),
+        12px 12px 0 var(--retro-magenta);
+    line-height: 0.9;
+}
+
+.retro-title-lime {
+    font-family: "Bowlby One", cursive;
+    color: var(--retro-lime-bright);
+    -webkit-text-stroke: 3px var(--retro-black);
+    text-shadow:
+        5px 5px 0 var(--retro-black),
+        10px 10px 0 var(--retro-purple);
+    line-height: 0.9;
+}
+
+.retro-outline {
+    color: var(--retro-yellow);
+    -webkit-text-stroke: 2px var(--retro-black);
+    text-shadow: 3px 3px 0 var(--retro-black);
+}
+
+/* RETRO BORDER + SHADOW UTILITY */
+.retro-card {
+    background: white;
+    border: 4px solid var(--retro-black);
+    border-radius: 28px;
+    box-shadow: 8px 8px 0 var(--retro-black);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.retro-card:hover {
+    transform: translate(-4px, -4px) rotate(-0.5deg);
+    box-shadow: 12px 12px 0 var(--retro-black);
+}
+
+.retro-card-purple {
+    background: var(--retro-purple);
+    color: white;
+    border: 4px solid var(--retro-black);
+    border-radius: 28px;
+    box-shadow: 8px 8px 0 var(--retro-black);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.retro-card-purple:hover {
+    transform: translate(-4px, -4px) rotate(0.5deg);
+    box-shadow: 12px 12px 0 var(--retro-magenta);
+}
+
+.retro-card-lime {
+    background: var(--retro-lime-bright);
+    border: 4px solid var(--retro-black);
+    border-radius: 28px;
+    box-shadow: 8px 8px 0 var(--retro-black);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.retro-card-lime:hover {
+    transform: translate(-4px, -4px) rotate(-0.5deg);
+    box-shadow: 12px 12px 0 var(--retro-magenta);
+}
+
+.retro-card-magenta {
+    background: var(--retro-magenta);
+    color: white;
+    border: 4px solid var(--retro-black);
+    border-radius: 28px;
+    box-shadow: 8px 8px 0 var(--retro-black);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.retro-card-magenta:hover {
+    transform: translate(-4px, -4px) rotate(0.5deg);
+    box-shadow: 12px 12px 0 var(--retro-lime);
+}
+
+/* RETRO BUTTON */
+.retro-btn {
+    font-family: "Bowlby One", cursive;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    padding: 14px 28px;
+    border: 4px solid var(--retro-black);
+    border-radius: 999px;
+    box-shadow: 5px 5px 0 var(--retro-black);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.retro-btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--retro-black);
+}
+
+.retro-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--retro-black);
+}
+
+.retro-btn-purple {
+    background: var(--retro-purple);
+    color: white;
+}
+.retro-btn-magenta {
+    background: var(--retro-magenta);
+    color: white;
+}
+.retro-btn-lime {
+    background: var(--retro-lime-bright);
+    color: var(--retro-black);
+}
+.retro-btn-black {
+    background: var(--retro-black);
+    color: var(--retro-yellow);
+}
+.retro-btn-yellow {
+    background: var(--retro-yellow);
+    color: var(--retro-black);
+}
+
+/* MARQUEE TICKER */
+.ticker {
+    background: var(--retro-black);
+    color: var(--retro-yellow);
+    border-top: 4px solid var(--retro-black);
+    border-bottom: 4px solid var(--retro-black);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.ticker-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker-scroll 30s linear infinite;
+    font-family: "Bungee", cursive;
+    letter-spacing: 0.18em;
+    padding: 14px 0;
+    font-size: 0.95rem;
+}
+.ticker-track > span {
+    padding: 0 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+}
+
+@keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* FLOATING DECORATIONS */
+.float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+.float-fast {
+    animation: float-fast 3.5s ease-in-out infinite;
+}
+.spin-slow {
+    animation: spin-slow 14s linear infinite;
+}
+.wobble {
+    animation: wobble 4s ease-in-out infinite;
+}
+.bounce-soft {
+    animation: bounce-soft 2.6s ease-in-out infinite;
+}
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+}
+@keyframes float-fast {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(8deg); }
+}
+@keyframes spin-slow {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+}
+@keyframes wobble {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+}
+@keyframes bounce-soft {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(236,72,153,0)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 14px rgba(236,72,153,0.7)); transform: scale(1.06); }
+}
+
+/* SHAKE / WIGGLE ON HOVER */
+.hover-wiggle:hover {
+    animation: wiggle 0.6s ease-in-out;
+}
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+/* STAR BURST */
+.starburst {
+    background: var(--retro-magenta);
+    color: white;
+    font-family: "Bowlby One", cursive;
+    clip-path: polygon(
+      50% 0%, 61% 20%, 80% 10%, 75% 32%,
+      100% 35%, 82% 50%, 100% 65%, 75% 68%,
+      80% 90%, 61% 80%, 50% 100%, 39% 80%,
+      20% 90%, 25% 68%, 0% 65%, 18% 50%,
+      0% 35%, 25% 32%, 20% 10%, 39% 20%
+    );
+}
+
+/* INPUT */
+.retro-input {
+    background: white;
+    border: 3px solid var(--retro-black);
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 var(--retro-black);
+    padding: 10px 18px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    outline: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.retro-input:focus {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--retro-magenta);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+::-webkit-scrollbar-track {
+    background: var(--retro-yellow);
+    border-left: 3px solid var(--retro-black);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--retro-purple);
+    border: 3px solid var(--retro-black);
+    border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--retro-magenta);
+}
+
+::selection {
+    background: var(--retro-magenta);
+    color: var(--retro-yellow);
+}
+
+/* legacy shadcn vars (kept so installed UI primitives don't break) */
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
+        --background: 51 100% 50%;
+        --foreground: 0 0% 4%;
         --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
+        --card-foreground: 0 0% 4%;
         --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-    }
-    .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
-}
-
-@layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
+        --popover-foreground: 0 0% 4%;
+        --primary: 263 70% 30%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 325 80% 60%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 51 100% 90%;
+        --muted-foreground: 0 0% 30%;
+        --accent: 84 70% 55%;
+        --accent-foreground: 0 0% 4%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 0 0% 4%;
+        --input: 0 0% 89%;
+        --ring: 263 70% 30%;
+        --radius: 1.25rem;
     }
 }
 
@@ -86,7 +377,6 @@ code {
     [data-debug-wrapper="true"] {
         display: contents !important;
     }
-
     [data-debug-wrapper="true"] > * {
         margin-left: inherit;
         margin-right: inherit;
