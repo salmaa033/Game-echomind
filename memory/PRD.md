@@ -77,3 +77,16 @@ Berdasarkan dokumen `REVISI LAGI ECHOMIND DIGITAL.docx`:
 - ✅ Page title HTML & teks card content sesuai dokumen baru
 
 Note: untuk papan ilustrasi vector art retro (top-down view dengan banyak detail dekorasi dalam kotak) butuh asset desain custom — di iterasi ini board tetap functional grid 6×10 dengan ikon lucide bertema. Bisa di-upgrade dengan asset SVG custom di iterasi berikutnya.
+
+## Update — Revisi 3 (2026-01-09): Board Redesign + Boost Mechanics
+1. **Snake & Ladder SVG overlay**: Ular hijau besar dengan kepala bulat, mata, lidah pink + tangga oranye besar dengan 2 rel & rungs — menghubungkan secara visual head→tail / foot→top. Komponen `SnakeSVG` dan `LadderSVG` baru.
+2. **Layout full-width**: max-w-[1600px], board flex grow, panel kanan 360px → mengisi seluruh ruang halaman.
+3. **Boost Inventory System** (state baru `inventory[playerIdx] = {shield, skipQ, reroll}`):
+   - **Shield** (Tameng Penalti) — disimpan, **otomatis aktif** saat kena Twist (membatalkan efek)
+   - **SkipQ** (Skip Pertanyaan) — disimpan, tombol "💖 Pakai SKIP-Q" muncul di modal kartu Challenge/Scenario
+   - **Reroll** (Lempar Dadu Ulang) — disimpan, setelah dadu keluar tombol "💖 Pakai Reroll" muncul + tombol "▶ Jalan"
+4. **Scoreboard menampilkan inventory tiap pemain** sebagai badge berwarna dengan icon + count (🛡️ x1, ⏩ x2, 🎲 x1) + status SKIP TURN bila aktif. Pemain tanpa power-up menampilkan "— belum punya power-up —"
+5. **Twist effects telah diverifikasi berfungsi**: back-3, skip-1, reverse, swap, back-aspect (+1 shield gratis), swap-boost (transfer shield ke kanan)
+6. **Boost effects telah diverifikasi berfungsi**: shield (store), forward-5 (immediate, dapat menang), reroll (store), skip-q (store), share-3 (give to right player +3 langkah)
+
+Functional tested via Playwright: Berbagi Kebaikan boost berhasil mendorong Rian dari 22 → 50/60. Skip Turn badge muncul saat efek Twist aktif.
