@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Dices, Trophy, Plus, Trash2, Play, RotateCcw, Sparkles, ClipboardList, X, Flame, MessageCircle, Zap, Heart } from "lucide-react";
 import { ASPECTS, CARDS, CARD_TYPES, TWIST_EFFECTS, BOOST_EFFECTS } from "@/constants/cards";
 import { Star, Sparkle, PixelHeart, Lightning, Diamond } from "@/components/RetroIcons";
+import { sfx } from "@/lib/sounds";
 
 const ICON_FOR = {
   flame: Flame,
@@ -345,6 +346,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
     setDirection(1);
     setHistory([]);
     setMessage(`Giliran ${validPlayers[0].name}. Klik DADU!`);
+    sfx.start();
     setPhase("play");
   };
 
@@ -369,6 +371,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
 
   const rollDice = () => {
     if (rolling || activeCard || winner) return;
+    sfx.dice();
     setRolling(true);
     let count = 0;
     const interval = setInterval(() => {
@@ -429,6 +432,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
       const np = [...positions];
       np[turn] = i;
       setPositions(np);
+      sfx.step();
       if (i >= target) {
         clearInterval(stepInterval);
         finishMove(i);
@@ -440,9 +444,11 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
     let finalPos = landed;
     if (SNAKES[landed] !== undefined) {
       finalPos = SNAKES[landed];
+      sfx.snake();
       setMessage(`🐍 Ular! ${validPlayers[turn].name} turun ke ${finalPos}.`);
     } else if (LADDERS[landed] !== undefined) {
       finalPos = LADDERS[landed];
+      sfx.ladder();
       setMessage(`🪜 Tangga! ${validPlayers[turn].name} naik ke ${finalPos}.`);
     }
     if (finalPos !== landed) {
@@ -452,6 +458,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
     }
 
     if (finalPos === TOTAL) {
+      sfx.win();
       setWinner({ idx: turn, name: validPlayers[turn].name });
       // save to history
       const entry = {
@@ -470,6 +477,9 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
 
     // Show card for the landed cell
     const card = cardForCell(finalPos);
+    if (card.type === "twist") sfx.twist();
+    else if (card.type === "boost") sfx.boost();
+    else sfx.card();
     setActiveCard({ ...card, cellNumber: finalPos });
   };
 

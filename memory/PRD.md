@@ -104,3 +104,22 @@ Functional tested via Playwright: Berbagi Kebaikan boost berhasil mendorong Rian
 - **Mode Konselor**: dashboard fasilitator, kelola kelas, akses semua riwayat
 - **Export Laporan PDF**: download riwayat permainan + refleksi sebagai PDF
 - **Sound Effects & Background Music**: efek dadu, ular menjatuhkan, tangga naik, kemenangan + BGM retro
+
+## Update — Revisi 6 (2026-01-09): Sound Effects (Web Audio API)
+File baru `/app/frontend/src/lib/sounds.js` — generator suara 8-bit retro programmatic (TIDAK pakai file asset, semua via Web Audio API oscillator):
+- `sfx.click` — 720Hz square 40ms (semua tombol/link/button via global listener di App.js)
+- `sfx.dice` — 3-note ascending sequence saat lempar dadu
+- `sfx.step` — 520Hz triangle setiap pion bergerak 1 kotak
+- `sfx.ladder` — 4-note ascending arpeggio saat naik tangga
+- `sfx.snake` — sawtooth slide-down saat turun ular
+- `sfx.card` — 2-note saat modal kartu Challenge/Scenario terbuka
+- `sfx.twist` — sawtooth wobble saat kartu Twist
+- `sfx.boost` — sine ascending saat kartu Boost
+- `sfx.win` — fanfare C-E-G-C victory
+- `sfx.start` — saat klik "Mulai Permainan"
+
+**Global click listener** (`installGlobalClickSfx`) di App.js dipasang sekali via useEffect → semua `button`, `a`, `[role=button]`, `input[checkbox/radio]` otomatis play click sound.
+
+**Sound Toggle button** floating di pojok kanan bawah halaman (Volume2 / VolumeX dari lucide-react) — user bisa mute/unmute kapan saja, state tersimpan di module-level variable.
+
+**Catatan**: BGM (background music loop) belum diimplementasikan — tetap di Future backlog. Saat ini hanya sound effects per-event saja.
