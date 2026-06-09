@@ -86,8 +86,8 @@ const cellCenter = (n) => {
   };
 };
 
-// Snake SVG — wavy curve head→tail with snake body
-const SnakeSVG = ({ from, to, color = "#16A34A" }) => {
+// Snake SVG — thick patterned body, big head, scales
+const SnakeSVG = ({ from, to, color = "#FF1493", secondary = "#FFD600" }) => {
   const a = cellCenter(from);
   const b = cellCenter(to);
   const midX = (a.x + b.x) / 2;
@@ -95,71 +95,72 @@ const SnakeSVG = ({ from, to, color = "#16A34A" }) => {
   const dx = b.x - a.x;
   const dy = b.y - a.y;
   const len = Math.sqrt(dx * dx + dy * dy);
-  const nx = -dy / len, ny = dx / len; // normal
-  const off = Math.min(15, len * 0.35);
-  const c1x = midX + nx * off - dx * 0.15;
-  const c1y = midY + ny * off - dy * 0.15;
-  const c2x = midX - nx * off + dx * 0.15;
-  const c2y = midY - ny * off + dy * 0.15;
+  const nx = -dy / len, ny = dx / len;
+  const off = Math.min(18, len * 0.45);
+  const c1x = midX + nx * off - dx * 0.18;
+  const c1y = midY + ny * off - dy * 0.18;
+  const c2x = midX - nx * off + dx * 0.18;
+  const c2y = midY - ny * off + dy * 0.18;
+  const pathD = `M ${a.x} ${a.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y}`;
   return (
     <g>
-      <path
-        d={`M ${a.x} ${a.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y}`}
-        stroke={color}
-        strokeWidth="2.4"
-        fill="none"
-        strokeLinecap="round"
-        opacity="0.95"
-      />
-      <path
-        d={`M ${a.x} ${a.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y}`}
-        stroke="#000"
-        strokeWidth="0.4"
-        fill="none"
-        strokeDasharray="1.2 1.2"
-        opacity="0.6"
-      />
+      {/* black outline */}
+      <path d={pathD} stroke="#0A0A0A" strokeWidth="5.2" fill="none" strokeLinecap="round" />
+      {/* main body */}
+      <path d={pathD} stroke={color} strokeWidth="4.2" fill="none" strokeLinecap="round" />
+      {/* scale stripes */}
+      <path d={pathD} stroke={secondary} strokeWidth="2" fill="none" strokeLinecap="round" strokeDasharray="0.8 2" />
       {/* head */}
-      <circle cx={a.x} cy={a.y} r="2.2" fill={color} stroke="#000" strokeWidth="0.5" />
-      <circle cx={a.x - 0.7} cy={a.y - 0.7} r="0.4" fill="#FFD600" />
-      <circle cx={a.x + 0.7} cy={a.y - 0.7} r="0.4" fill="#FFD600" />
-      {/* forked tongue */}
-      <path d={`M ${a.x} ${a.y + 1.8} L ${a.x - 0.6} ${a.y + 2.8} M ${a.x} ${a.y + 1.8} L ${a.x + 0.6} ${a.y + 2.8}`}
-            stroke="#FF1493" strokeWidth="0.4" strokeLinecap="round" fill="none" />
-      {/* tail */}
-      <circle cx={b.x} cy={b.y} r="1" fill={color} stroke="#000" strokeWidth="0.3" />
+      <circle cx={a.x} cy={a.y} r="3.2" fill={color} stroke="#0A0A0A" strokeWidth="0.7" />
+      <circle cx={a.x - 1} cy={a.y - 1} r="0.7" fill="#fff" stroke="#0A0A0A" strokeWidth="0.2" />
+      <circle cx={a.x + 1} cy={a.y - 1} r="0.7" fill="#fff" stroke="#0A0A0A" strokeWidth="0.2" />
+      <circle cx={a.x - 1} cy={a.y - 1} r="0.32" fill="#0A0A0A" />
+      <circle cx={a.x + 1} cy={a.y - 1} r="0.32" fill="#0A0A0A" />
+      {/* tongue */}
+      <path d={`M ${a.x} ${a.y + 2.5} L ${a.x - 1.2} ${a.y + 4} M ${a.x} ${a.y + 2.5} L ${a.x + 1.2} ${a.y + 4}`}
+            stroke="#FF1493" strokeWidth="0.6" strokeLinecap="round" fill="none" />
+      {/* tail tip */}
+      <circle cx={b.x} cy={b.y} r="1.3" fill={color} stroke="#0A0A0A" strokeWidth="0.4" />
     </g>
   );
 };
 
-// Ladder SVG — 2 rails + rungs
-const LadderSVG = ({ from, to, color = "#FB923C" }) => {
+// Ladder SVG — wooden brown rails with thick rungs (board-game style)
+const LadderSVG = ({ from, to, color = "#92400E", rail = "#FB923C" }) => {
   const a = cellCenter(from);
   const b = cellCenter(to);
   const dx = b.x - a.x;
   const dy = b.y - a.y;
   const len = Math.sqrt(dx * dx + dy * dy);
   const nx = -dy / len, ny = dx / len;
-  const w = 2.2;
+  const w = 2.6;
   const ax1 = a.x + nx * w, ay1 = a.y + ny * w;
   const ax2 = a.x - nx * w, ay2 = a.y - ny * w;
   const bx1 = b.x + nx * w, by1 = b.y + ny * w;
   const bx2 = b.x - nx * w, by2 = b.y - ny * w;
-  // rungs
+  const count = Math.max(3, Math.round(len / 3.5));
   const rungs = [];
-  const count = Math.max(3, Math.round(len / 4));
   for (let i = 1; i < count; i++) {
     const t = i / count;
     const r1x = ax1 + (bx1 - ax1) * t;
     const r1y = ay1 + (by1 - ay1) * t;
     const r2x = ax2 + (bx2 - ax2) * t;
     const r2y = ay2 + (by2 - ay2) * t;
-    rungs.push(<line key={i} x1={r1x} y1={r1y} x2={r2x} y2={r2y} stroke="#0A0A0A" strokeWidth="0.8" strokeLinecap="round" />);
+    rungs.push(
+      <g key={i}>
+        <line x1={r1x} y1={r1y} x2={r2x} y2={r2y} stroke="#0A0A0A" strokeWidth="1.6" strokeLinecap="round" />
+        <line x1={r1x} y1={r1y} x2={r2x} y2={r2y} stroke={color} strokeWidth="1" strokeLinecap="round" />
+      </g>
+    );
   }
   return (
     <g>
-      <line x1={ax1} y1={ay1} x2={bx1} y2={by1} stroke={color} strokeWidth="1.4" strokeLinecap="round" />
-      <line x1={ax2} y1={ay2} x2={bx2} y2={by2} stroke={color} strokeWidth="1.4" strokeLinecap="round" />
+      {/* shadows / outlines */}
+      <line x1={ax1} y1={ay1} x2={bx1} y2={by1} stroke="#0A0A0A" strokeWidth="2.6" strokeLinecap="round" />
+      <line x1={ax2} y1={ay2} x2={bx2} y2={by2} stroke="#0A0A0A" strokeWidth="2.6" strokeLinecap="round" />
+      {/* rails */}
+      <line x1={ax1} y1={ay1} x2={bx1} y2={by1} stroke={rail} strokeWidth="1.8" strokeLinecap="round" />
+      <line x1={ax2} y1={ay2} x2={bx2} y2={by2} stroke={rail} strokeWidth="1.8" strokeLinecap="round" />
       {rungs}
     </g>
   );
@@ -187,15 +188,20 @@ const Board = ({ positions, validPlayers, lastRoll }) => {
               const card = cardForCell(n);
               const aspect = ASPECTS.find((a) => a.id === card.aspect);
               const type = CARD_TYPES[card.type];
+              const isStart = n === 1;
+              const isFinish = n === TOTAL;
+              const checker = ((Math.floor((n - 1) / COLS) + ((n - 1) % COLS)) % 2 === 0);
               return (
                 <div
                   key={n}
                   data-testid={`cell-${n}`}
                   className="relative rounded-md border-2 border-black flex items-center justify-center overflow-hidden"
-                  style={{ backgroundColor: aspect.color + "26" }}
+                  style={{ backgroundColor: aspect.color + (checker ? "40" : "18") }}
                   title={`#${n} · ${aspect.name} · ${type.label}`}
                 >
                   <div className="absolute top-0 left-0 text-[9px] md:text-[11px] font-pixel bg-black text-yellow-300 px-1 leading-tight">{n}</div>
+                  {isStart && <div className="absolute bottom-0 inset-x-0 bg-[#FF1493] text-white font-display text-[9px] md:text-[11px] text-center border-t-2 border-black leading-tight py-0.5">START</div>}
+                  {isFinish && <div className="absolute bottom-0 inset-x-0 bg-[#FFD600] text-black font-display text-[9px] md:text-[11px] text-center border-t-2 border-black leading-tight py-0.5">FINISH</div>}
                   <TypeIcon iconKey={type.iconKey} className="w-5 h-5 md:w-7 md:h-7" style={{ color: type.color }} strokeWidth={3} />
                 </div>
               );
@@ -205,12 +211,28 @@ const Board = ({ positions, validPlayers, lastRoll }) => {
 
         {/* Snake & Ladder SVG overlay */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {Object.entries(LADDERS).map(([foot, top]) => (
-            <LadderSVG key={`L${foot}`} from={Number(foot)} to={Number(top)} />
-          ))}
-          {Object.entries(SNAKES).map(([head, tail]) => (
-            <SnakeSVG key={`S${head}`} from={Number(head)} to={Number(tail)} />
-          ))}
+          {Object.entries(LADDERS).map(([foot, top], i) => {
+            const palettes = [
+              { color: "#92400E", rail: "#FB923C" },
+              { color: "#5B21B6", rail: "#A855F7" },
+              { color: "#84CC16", rail: "#BEF264" },
+              { color: "#0E7490", rail: "#06B6D4" },
+              { color: "#BE185D", rail: "#EC4899" },
+            ];
+            const p = palettes[i % palettes.length];
+            return <LadderSVG key={`L${foot}`} from={Number(foot)} to={Number(top)} color={p.color} rail={p.rail} />;
+          })}
+          {Object.entries(SNAKES).map(([head, tail], i) => {
+            const palettes = [
+              { color: "#FF1493", secondary: "#FFD600" },
+              { color: "#16A34A", secondary: "#84CC16" },
+              { color: "#F97316", secondary: "#FBBF24" },
+              { color: "#7C3AED", secondary: "#EC4899" },
+              { color: "#06B6D4", secondary: "#FFFFFF" },
+            ];
+            const p = palettes[i % palettes.length];
+            return <SnakeSVG key={`S${head}`} from={Number(head)} to={Number(tail)} color={p.color} secondary={p.secondary} />;
+          })}
         </svg>
 
         {/* Player tokens overlay */}
@@ -239,8 +261,10 @@ const Board = ({ positions, validPlayers, lastRoll }) => {
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-3 mt-3 text-xs font-pixel">
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-1 bg-[#16A34A] rounded" /> Ular (turun)</span>
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-1 bg-[#FB923C] rounded" /> Tangga (naik)</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-4 h-1.5 rounded-full" style={{ background: "linear-gradient(90deg,#FF1493,#FFD600)" }} /> Ular (turun)</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-4 h-1.5 rounded-full bg-[#FB923C]" /> Tangga (naik)</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-[#FF1493] border-2 border-black" /> START</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-[#FFD600] border-2 border-black" /> FINISH</span>
         {Object.entries(CARD_TYPES).map(([k, t]) => (
           <span key={k} className="flex items-center gap-1">
             <TypeIcon iconKey={t.iconKey} className="w-3 h-3" style={{ color: t.color }} strokeWidth={3} /> {t.label}
