@@ -142,12 +142,6 @@ export const OnlinePlay = () => {
                 <button data-testid="start-board-btn" onClick={startBoard} className="retro-btn retro-btn-purple !text-sm">
                   <Play className="w-4 h-4" strokeWidth={3} /> Mulai Board
                 </button>
-                <div className="mt-4 p-3 rounded-lg border-2 border-black bg-[#FFD600]/60">
-                  <div className="font-pixel text-[10px] mb-1">★ NOTE</div>
-                  <p className="font-body text-xs">
-                    Realtime sync multi-device akan ditambahkan di update berikutnya. Saat ini QR scan akan mengarahkan ke halaman join — untuk demo, board berjalan satu device (gantian seperti Pass & Play).
-                  </p>
-                </div>
               </div>
             </div>
 
