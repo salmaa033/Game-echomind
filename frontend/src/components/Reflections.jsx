@@ -13,7 +13,7 @@ const REFLECTION_PROMPTS = [
   "Hal baru apa yang kamu pelajari tentang temanmu?",
   "Setelah bermain, apa satu hal kecil yang ingin kamu coba ubah dalam hidupmu?",
   "Bagaimana perasaanmu saat mendapat kartu Challenge / Twist?",
-  "Topik (aspek) mana yang menurutmu paling menarik untuk dibahas lebih dalam di sesi BK?",
+  "Topik (aspek) mana yang menurutmu paling menarik untuk dibahas lebih dalam di sesi berikutnya?",
 ];
 
 const formatTime = (ts) => {
@@ -65,10 +65,10 @@ const Reflections = () => {
         <div className="retro-card-purple p-6 md:p-8 mb-6 text-white">
           <div className="flex items-center gap-3 mb-3">
             <BookOpen className="w-8 h-8" strokeWidth={3} />
-            <h1 className="font-display text-3xl md:text-4xl" style={{ WebkitTextStroke: "1.5px #0A0A0A", textShadow: "3px 3px 0 #FF1493" }}>UNTUK GURU BK</h1>
+            <h1 className="font-display text-3xl md:text-4xl" style={{ WebkitTextStroke: "1.5px #0A0A0A", textShadow: "3px 3px 0 #FF1493" }}>UNTUK FASILITATOR</h1>
           </div>
           <p className="font-body text-sm md:text-base text-white/90">
-            Halaman ini mendukung guru bimbingan &amp; konseling melakukan <strong>refleksi pasca-permainan</strong>:
+            Halaman ini mendukung fasilitator / mentor melakukan <strong>refleksi pasca-permainan</strong>:
             buka riwayat poin tiap pemain, kartu yang dijawab, dan gunakan daftar pertanyaan refleksi di bawah untuk diskusi.
           </p>
         </div>

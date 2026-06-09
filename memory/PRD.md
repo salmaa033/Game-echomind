@@ -90,3 +90,17 @@ Note: untuk papan ilustrasi vector art retro (top-down view dengan banyak detail
 6. **Boost effects telah diverifikasi berfungsi**: shield (store), forward-5 (immediate, dapat menang), reroll (store), skip-q (store), share-3 (give to right player +3 langkah)
 
 Functional tested via Playwright: Berbagi Kebaikan boost berhasil mendorong Rian dari 22 → 50/60. Skip Turn badge muncul saat efek Twist aktif.
+
+## Update — Revisi 5 (2026-01-09): Text Cleanup + Real QR + Max 10 Players
+1. **Text cleanup**: hapus SEMUA instance "Bimbingan & Konseling", "Guru BK", "Echomind adalah media bimbingan dan konseling..." dari Landing.jsx, Play.jsx, SnakeLadder.jsx, Reflections.jsx, index.html. Diganti netral: "Self-Disclosure Boardgame", "fasilitator", "mentor", dst.
+2. **Real QR Code** via `qrcode.react` package (`QRCodeSVG` component): QR code asli berisi URL lengkap `${origin}/play/online?room=XXXXXX`. Pemain scan QR → otomatis terbuka halaman join dengan code pre-filled.
+3. **Copy Link + Share API**: tombol COPY LINK (clipboard) + tombol SHARE (native Web Share API untuk WhatsApp/Telegram dll)
+4. **Max 10 players** (sebelumnya 6): array PLAYER_COLORS diperluas, validasi setup, ticker "2-10 PEMAIN", mode cards "2 — 10 PEMAIN", deskripsi setup panel "(2–10 orang)"
+5. **Auto-join URL**: OnlinePlay membaca `?room=XXXXXX` dari URL → langsung masuk join panel dengan kode terisi
+6. **Note transparency**: card "★ NOTE" di host panel menjelaskan bahwa realtime sync multi-device akan ditambahkan di update berikutnya — saat ini board jalan satu device (gantian seperti Pass & Play)
+
+## FUTURE (Backlog)
+- **Realtime WebSocket multiplayer**: turn-based, hanya pemain giliran bisa lempar dadu, lainnya spectator (FastAPI WebSocket + room state in-memory atau Redis)
+- **Mode Konselor**: dashboard fasilitator, kelola kelas, akses semua riwayat
+- **Export Laporan PDF**: download riwayat permainan + refleksi sebagai PDF
+- **Sound Effects & Background Music**: efek dadu, ular menjatuhkan, tangga naik, kemenangan + BGM retro

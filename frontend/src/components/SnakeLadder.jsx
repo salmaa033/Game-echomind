@@ -64,7 +64,7 @@ const LADDERS = {
   42: 55,
 };
 
-const PLAYER_COLORS = ["#FF1493", "#5B21B6", "#84CC16", "#06B6D4", "#FB923C", "#FFD600"];
+const PLAYER_COLORS = ["#FF1493", "#5B21B6", "#84CC16", "#06B6D4", "#FB923C", "#FFD600", "#EC4899", "#10B981", "#8B5CF6", "#F97316"];
 
 // Compute col/row (from bottom) for a cell number (1..60)
 const cellToCoord = (n) => {
@@ -327,7 +327,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
     setPlayers(arr);
   };
   const addPlayer = () => {
-    if (players.length < 6) setPlayers([...players, { name: "", color: PLAYER_COLORS[players.length] }]);
+    if (players.length < 10) setPlayers([...players, { name: "", color: PLAYER_COLORS[players.length] }]);
   };
   const removePlayer = (i) => {
     if (players.length > 2) setPlayers(players.filter((_, idx) => idx !== i));
@@ -636,7 +636,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
             <h2 className="font-display text-3xl md:text-5xl mb-4" style={{ textShadow: "4px 4px 0 #FF1493" }}>
               SIAPA YANG MAIN?
             </h2>
-            <p className="font-body mb-6 text-[#0A0A0A]/80">Masukkan nama pemain (2–6 orang). Board ular tangga 60 kotak ECHOMIND.</p>
+            <p className="font-body mb-6 text-[#0A0A0A]/80">Masukkan nama pemain (2–10 orang). Board ular tangga 60 kotak ECHOMIND.</p>
 
             <div className="space-y-3 mb-5">
               {players.map((p, i) => (
@@ -662,7 +662,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              {players.length < 6 && (
+              {players.length < 10 && (
                 <button data-testid="add-player-btn" onClick={addPlayer} className="retro-btn retro-btn-yellow !text-sm">
                   <Plus className="w-4 h-4" strokeWidth={3} /> Tambah Pemain
                 </button>
@@ -762,7 +762,7 @@ const SnakeLadder = ({ mode = "passplay", roomCode = null }) => {
                 <RotateCcw className="w-4 h-4" strokeWidth={3} /> MAIN LAGI
               </button>
               <button data-testid="open-reflection" onClick={() => navigate("/reflections")} className="retro-btn retro-btn-magenta">
-                <ClipboardList className="w-4 h-4" strokeWidth={3} /> Buka Refleksi BK
+                <ClipboardList className="w-4 h-4" strokeWidth={3} /> Buka Refleksi
               </button>
             </div>
           </div>

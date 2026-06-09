@@ -124,7 +124,7 @@ const Hero = () => {
       <div className="max-w-6xl mx-auto text-center relative">
         <div className="inline-flex items-center gap-2 retro-card-purple !rounded-full !p-0 px-5 py-2 mb-6">
           <Sparkles className="w-4 h-4" strokeWidth={3} />
-          <span className="font-arcade text-xs md:text-sm">SELF-DISCLOSURE BOARDGAME · EST. 2026</span>
+          <span className="font-arcade text-xs md:text-sm">SELF-DISCLOSURE BOARDGAME · 2-10 PEMAIN</span>
         </div>
 
         <div className="relative inline-block">
@@ -157,7 +157,7 @@ const Hero = () => {
             className="retro-btn retro-btn-lime"
           >
             <ClipboardList className="w-5 h-5" strokeWidth={3} />
-            Riwayat / Refleksi BK
+            Riwayat / Refleksi
           </button>
         </div>
       </div>
@@ -229,8 +229,8 @@ const ModesSection = () => {
             badge="DI KELAS"
             icon={<Smartphone className="w-10 h-10 text-white" strokeWidth={3} />}
             title="Pass & Play"
-            subtitle="Satu device, gantian main. Cocok untuk sesi BK di kelas — board ular tangga 60 kotak."
-            players="2 — 6 PEMAIN"
+            subtitle="Satu device, gantian main. Cocok untuk sesi di kelas — board ular tangga 60 kotak."
+            players="2 — 10 PEMAIN"
             onPlay={() => navigate("/play/passplay")}
           />
           <ModeCard
@@ -241,7 +241,7 @@ const ModesSection = () => {
             icon={<Users className="w-10 h-10 text-white" strokeWidth={3} />}
             title="Multiplayer"
             subtitle="Akses dari device masing-masing dengan kode room. Board ular tangga 60 kotak sama."
-            players="2 — 6 PEMAIN"
+            players="2 — 10 PEMAIN"
             onPlay={() => navigate("/play/online")}
           />
         </div>
@@ -256,7 +256,7 @@ const HowToPlay = () => {
     { n: "01", color: "#FF1493", title: "Pilih Mode", desc: "Pass & Play (1 device) atau Multiplayer (multi-device)." },
     { n: "02", color: "#5B21B6", title: "Kocok Dadu", desc: "Bergiliran melempar dadu di papan ular tangga 60 kotak." },
     { n: "03", color: "#84CC16", title: "Ambil Kartu", desc: "Tiap kotak punya kartu: Challenge, Scenario, Twist, atau Boost." },
-    { n: "04", color: "#06B6D4", title: "Refleksi", desc: "Selesai main → Guru BK pakai riwayat & refleksi untuk konseling." },
+    { n: "04", color: "#06B6D4", title: "Refleksi", desc: "Selesai main → fasilitator pakai riwayat & refleksi untuk diskusi." },
   ];
   return (
     <section id="how" data-testid="how-section" className="relative z-10 px-4 md:px-10 py-12">
@@ -385,20 +385,21 @@ const AboutSection = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <p className="font-body text-base md:text-lg font-medium text-[#0A0A0A]/85 mb-4">
-                <strong>Echomind</strong> merupakan media bimbingan dan konseling berbasis permainan papan (board game) yang bertujuan
-                membantu peserta didik mengembangkan kemampuan <strong>keterbukaan diri (self-disclosure)</strong> dalam suasana
-                yang aman, menyenangkan, dan suportif.
+                Permainan papan ECHOMIND mengajak peserta didik mengembangkan
+                <strong> keterbukaan diri (self-disclosure)</strong> melalui ular tangga,
+                kartu skenario, dan kartu challenge — dalam suasana yang
+                <strong> aman, menyenangkan,</strong> dan <strong>suportif</strong>.
               </p>
               <p className="font-body text-base md:text-lg font-medium text-[#0A0A0A]/85">
-                Melalui kombinasi permainan ular tangga, kartu skenario, dan kartu challenge, peserta didik diajak untuk
-                mengenali, mengungkapkan, serta merefleksikan berbagai pengalaman, pikiran, perasaan, dan pandangan yang dimilikinya.
+                Peserta diajak mengenali, mengungkapkan, dan merefleksikan pengalaman,
+                pikiran, perasaan, serta pandangannya bersama teman-teman.
               </p>
             </div>
             <div className="retro-card-purple p-6 md:p-8 text-white">
               <BookOpen className="w-10 h-10 mb-3" strokeWidth={3} />
-              <h3 className="font-display text-2xl mb-2" style={{ WebkitTextStroke: "1px #0A0A0A", textShadow: "2px 2px 0 #FF1493" }}>UNTUK GURU BK</h3>
+              <h3 className="font-display text-2xl mb-2" style={{ WebkitTextStroke: "1px #0A0A0A", textShadow: "2px 2px 0 #FF1493" }}>UNTUK FASILITATOR</h3>
               <p className="font-body text-sm md:text-base text-white/90 mb-4">
-                Setiap permainan tersimpan otomatis dengan riwayat skor & pertanyaan yang dijawab tiap pemain.
+                Setiap permainan tersimpan otomatis dengan riwayat skor & kartu yang dijawab tiap pemain.
                 Gunakan halaman <strong>Refleksi</strong> untuk membuka diskusi pasca-permainan.
               </p>
               <button
@@ -433,7 +434,7 @@ const Footer = () => (
         </div>
         <div>
           <div className="font-display text-2xl" style={{ textShadow: "2px 2px 0 #FFD600" }}>ECHOMIND</div>
-          <div className="font-pixel text-[10px] text-[#0A0A0A]/70">© 2026 · Media BK Self-Disclosure</div>
+          <div className="font-pixel text-[10px] text-[#0A0A0A]/70">© 2026 · Self-Disclosure Boardgame</div>
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
@@ -448,11 +449,10 @@ const Footer = () => (
 // === MAIN LANDING ===
 export default function Landing() {
   const tickerTop = [
-    { icon: "✦", text: "MEDIA BIMBINGAN & KONSELING" },
-    { icon: "◆", text: "BOARD GAME · ULAR TANGGA" },
-    { icon: "★", text: "60 KARTU · 6 ASPEK · 2-6 PEMAIN" },
-    { icon: "✧", text: "TEORI SIDNEY JOURARD" },
-    { icon: "▲", text: "EST. 2026" },
+    { icon: "✦", text: "BOARD GAME · ULAR TANGGA" },
+    { icon: "◆", text: "60 KARTU · 6 ASPEK · 2-10 PEMAIN" },
+    { icon: "★", text: "TEORI SIDNEY JOURARD" },
+    { icon: "✧", text: "EST. 2026" },
   ];
   const tickerBottom = [
     { icon: "♥", text: "AMAN · MENYENANGKAN · SUPORTIF" },
